@@ -22,7 +22,7 @@ In this project we are  building a multi user blog where users can sign in and p
 
 1. Download Google App Engine Console
  
-2. Clone the repository from https://github.com/ghoshabhi/Multi-User-Blog.git
+2. Clone the repository from https://github.com/dreamerHarshit/Udacit-Multi-User-Blog.git
  
 3. To run locally :
        - Unzip the contents from the cloned directory and find the file "app.yaml".
