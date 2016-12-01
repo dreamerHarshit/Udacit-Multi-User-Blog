@@ -74,6 +74,10 @@ def users_key(group='default'):
     """Return User Key"""
     return ndb.Key('users', group)
 
+def blog_key(name='default'):
+    '''Return Key for Blog'''
+    return ndb.Key('blogs', name)    
+
 
 class BlogHandler(webapp2.RequestHandler):
     """Define functions for rendering Web Pages"""
@@ -183,7 +187,7 @@ class Logout(BlogHandler):
 
 class Blog(BlogHandler):
     def get(self):
-        posts = ndb.gql("select * from Post order by created desc limit 10")
+        posts = ndb.gql("select * from PostModel order by created desc limit 10")
         self.render("front.html", posts=posts)
 
 
@@ -200,11 +204,10 @@ class NewPost(BlogHandler):
             return self.redirect("/login")
         subject = self.request.get("subject")
         content = self.request.get("content")
+        print "subject %s" % subject
+        print "content %s" % content
         if subject and content:
-            post = Post(parent=blog_key(),
-                            subject=subject,
-                            content=content,
-                            author=self.user)
+            post = PostModel(parent=blog_key(),subject=subject,content=content,author=self.user)
             post.put()
             self.redirect("/blog")
         else:
@@ -217,7 +220,7 @@ class NewPost(BlogHandler):
 class Post(BlogHandler):
     """Handler for Post and renders comments and likes"""
     def get(self, post_id):
-        key = ndb.Key('Post', int(post_id), parent=blog_key())
+        key = ndb.Key('PostModel', int(post_id), parent=blog_key())
         post = key.get()
         comments = Comment.gql("WHERE post_id = %s ORDER BY created DESC"
                                % int(post_id))
@@ -231,12 +234,12 @@ class Post(BlogHandler):
         self.render("permalink.html", post=post, comments=comments, liked=liked)
 
     def post(self, post_id):
-        key = ndb.Key('Post', int(post_id), parent=blog_key())
+        key = ndb.Key('PostModel', int(post_id), parent=blog_key())
         post = key.get()
         liked = Like.gql("WHERE post_id = :1 AND author.username = :2",
                         int(post_id), self.user.username).get()
         if self.request.get("like"):
-            if post and self.user and not liked:
+            if post and not self.user and not liked:
                 post.likes += 1
                 like = Like(post_id=int(post_id), author=self.user)
                 like.put()
@@ -268,7 +271,7 @@ class EditPost(BlogHandler):
     def get(self):
         if self.user:
             post_id = self.request.get("post")
-            key = ndb.Key('Post', int(post_id), parent=blog_key())
+            key = ndb.Key('PostModel', int(post_id), parent=blog_key())
             post = key.get()
             if not post:
                 self.error(404)
@@ -280,7 +283,7 @@ class EditPost(BlogHandler):
 
     def post(self):
         post_id = self.request.get("post")
-        key = ndb.Key('Post', int(post_id), parent=blog_key())
+        key = ndb.Key('PostModel', int(post_id), parent=blog_key())
         post = key.get()
         if post and post.author.username == self.user.username:
             if not self.user:
@@ -305,7 +308,7 @@ class DeletePost(BlogHandler):
     def get(self):
         if self.user:
             post_id = self.request.get("post")
-            key = ndb.Key('Post', int(post_id), parent=blog_key())
+            key = ndb.Key('PostModel', int(post_id), parent=blog_key())
             post = key.get()
             if not post:
                 self.error(404)
@@ -318,7 +321,7 @@ class DeletePost(BlogHandler):
         if not self.user:
             return self.redirect("/login")
         post_id = self.request.get("post")
-        key = ndb.Key('Post', int(post_id), parent=blog_key())
+        key = ndb.Key('PostModel', int(post_id), parent=blog_key())
         post = key.get()
         if post and post.author.username == self.user.username:
             key.delete()
