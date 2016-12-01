@@ -1,8 +1,8 @@
-## FullStackDeveloper Nanodegree- Multi User Blog
+# FullStackDeveloper Nanodegree- Multi User Blog
 
 In this project we are  building a multi user blog where users can sign in and post blog posts as well as 'Like' and 'Comment' on other posts made on the blog.
 
-#Use the following urls:
+## Use the following urls:
 
 /blog - for front page of blog
 
@@ -10,7 +10,7 @@ In this project we are  building a multi user blog where users can sign in and p
 
 /blog/post([0-9]+) - to visit post page
 
-#Directory Structure
+##Directory Structure
 1. static -contains all the CSS,JS files
 2. templates -contains all the template(.html) files
 3. app.yaml
@@ -18,7 +18,7 @@ In this project we are  building a multi user blog where users can sign in and p
 5. models.py
 6. README.md
 
-#Follow the steps below to run the app :
+## Follow the steps below to run the app :
 
 1. Download Google App Engine Console
  
@@ -34,7 +34,7 @@ In this project we are  building a multi user blog where users can sign in and p
        - Now open localhost:8080 in browser
 4. If you want to visit the live hosted app, visit this URL : https://basic-blog-149819.appspot.com
  
-#Resources
+## Resources
  
 1. Python is used as the scripting language for the server
     
