@@ -11,14 +11,12 @@ In this project we are  building a multi user blog where users can sign in and p
 /blog/post([0-9]+) - to visit post page
 
 #Directory Structure
--static
-    -contains all the CSS,JS files
--templates
-    -contains all the template(.html) files
--app.yaml
--main.py
--models.py
--README.md
+1. static -contains all the CSS,JS files
+2. templates -contains all the template(.html) files
+3. app.yaml
+4. main.py
+5. models.py
+6. README.md
 
 #Follow the steps below to run the app :
 
@@ -27,7 +25,7 @@ In this project we are  building a multi user blog where users can sign in and p
 2. Clone the repository from https://github.com/ghoshabhi/Multi-User-Blog.git
  
 3. To run locally :
-      - Unzip the contents from the cloned directory and find the file "app.yaml".
+       - Unzip the contents from the cloned directory and find the file "app.yaml".
         
        - Navigate to the location where the repo was cloned.
         
@@ -36,7 +34,7 @@ In this project we are  building a multi user blog where users can sign in and p
        - Now open localhost:8080 in browser
 4. If you want to visit the live hosted app, visit this URL : https://basic-blog-149819.appspot.com
  
- #Resources
+#Resources
  
 1. Python is used as the scripting language for the server
     
