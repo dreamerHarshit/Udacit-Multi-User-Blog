@@ -327,6 +327,33 @@ class DeletePost(BlogHandler):
             key.delete()
         self.redirect("/blog")
 
+class Comment(BlogHandler):
+    def get(self,post_id):
+        if self.user:
+            print "hello1"
+            print "p="+post_id
+            self.render("comment.html",post_id=post_id)
+        else:
+            self.redirect("/login")
+    def post(self,post_id):
+        if self.user:
+            print "hello2"
+            comment=self.request.get("comment")
+            print "c="+comment
+            print "p="+post_id
+            if comment:
+                print "hello3"
+                p=CommentModel(post_id=int(post_id),comment=comment,author=self.user)
+                if p:
+                    print "hello4"
+                p.put()
+                self.redirect("/blog/%s"% post_id)
+            else:
+                error="content please!"
+                self.render("comment.html", comment=comment, error=error)
+        else:
+            self.redirect('/login')
+
 
 class EditComment(BlogHandler):
     """Handler for EditComment"""
@@ -399,6 +426,7 @@ app = webapp2.WSGIApplication([('/', Blog),
                                ('/blog/([0-9]+)', Post),
                                ('/blog/edit', EditPost),
                                ('/blog/delete', DeletePost),
+                               ('/comment/new/([0-9]+)',Comment)
                                ('/comment/edit', EditComment),
                                ('/comment/delete', DeleteComment),
                                ], debug=True)
